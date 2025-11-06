@@ -1,14 +1,13 @@
-import { Patua_One, Lusitana } from "next/font/google";
+import { Domine, Cactus_Classical_Serif } from "next/font/google";
 
-//Header
-export const patua = Patua_One({
-  weight: ["400"],
-  style: "normal",
+//Primary, Header and CTA font
+export const domine = Domine({
   subsets: ["latin"],
-  preload: true,
+  weight: ["500"],
 });
 
-export const lusitana = Lusitana({
+//Secondary Font
+export const cactus = Cactus_Classical_Serif({
   subsets: ["latin"],
   weight: ["400"],
 });

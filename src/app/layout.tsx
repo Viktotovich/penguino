@@ -5,12 +5,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 //Fonts
-import { lusitana } from "~/core/fonts/fonts";
+import { domine, cactus } from "~/core/fonts/fonts";
 
 // UI Wrapper
 
 //Components
-import Header from "~/core/ui/Header";
+import Header from "~/core/sections/Header";
 
 export const metadata: Metadata = {
   title: "Penguino, home of entrepreneurs",
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${lusitana.className} antialiased dark:bg-gradient-blue`}
+        className={`${cactus.className} antialiased dark:bg-gradient-blue relative`}
       >
         <Header />
         {children}
