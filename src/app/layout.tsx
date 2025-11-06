@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 //Fonts
-import { domine, cactus } from "~/core/fonts/fonts";
+import { cactus } from "~/core/fonts/fonts";
 
 // UI Wrapper
 
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${cactus.className} antialiased dark:bg-gradient-blue relative`}
+        className={`${cactus.className} dark:bg-gradient-blue relative antialiased`}
       >
         <Header />
         {children}

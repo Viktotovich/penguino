@@ -8,19 +8,21 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const links = [
-    { label: "Home", href: "/" },
-    { label: "Penguino", href: "/about" },
+    { label: "Penguino?", href: "/about" },
+    { label: "Resources", href: "/resources" },
     { label: "Community", href: "/community" },
-    { label: "Join now", href: "/login" },
+    { label: "Join now", href: "/register" },
   ];
 
   return (
-    <header className="w-full bg-slate-500/10">
-      <div className="flex justify-between items-center px-6 py-6 md:px-12  xl:px-24">
-        <div className="text-xl font-bold">Logo</div>
+    <header className="absolute w-full bg-slate-900/60">
+      <div className="flex items-center justify-between px-6 py-6 md:px-12 xl:px-24">
+        <Link href="/">
+          <div className="text-xl font-bold">Logo</div>
+        </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden space-x-8 md:flex">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -34,7 +36,7 @@ export default function Header() {
 
         {/* Hamburger */}
         <button
-          className="md:hidden rounded hover:bg-muted/20"
+          className="hover:bg-muted/20 rounded md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -43,12 +45,12 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <nav className="md:hidden px-6 pb-4 space-y-2">
+        <nav className="h-full space-y-2 px-6 pb-4 md:hidden">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="block w-full py-2 text-foreground hover:text-primary"
+              className="text-foreground hover:text-primary block w-full py-2"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
