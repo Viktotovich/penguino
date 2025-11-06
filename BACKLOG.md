@@ -1,6 +1,6 @@
 # Backlog
 
-[ ] Chakra UI to build most of the frontend interactivity + components
+[ ] Shadcn to build most of the frontend interactivity + components
 [ ] CMS system for managing the content with admin login, news + blogs
 [ ] Login + Auth system for new users, ability to moderate posts, authorization
 middleware based on roles. **Google auth mandatory**
