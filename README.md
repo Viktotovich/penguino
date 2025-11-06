@@ -46,6 +46,22 @@ npm install
 npm run dev
 ```
 
+4. CLI usage
+
+```bash
+npm run penguino
+```
+
+To see the currently available commands for scaffolding
+
+Contrary to the CLI output, don't run
+
+```bash
+npm run penguino <command> --help
+```
+
+The options are not as descriptive
+
 CI/CD pipelines and testing will come later
 
 ### Current TODOs
