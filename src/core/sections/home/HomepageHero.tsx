@@ -3,6 +3,7 @@ import { domine } from "~/core/fonts/fonts";
 
 //Components
 import AnchorButton from "~/core/components/buttons/AnchorButton";
+import Tick from "~/core/components/ui/Tick";
 
 export default function HomepageHero() {
   return (
@@ -20,13 +21,18 @@ export default function HomepageHero() {
         individuals, get advice, and build life-long partnerships
       </p>
 
-      <div className="flex flex-col gap-4 md:flex-row">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <AnchorButton cta="Join Now" href="/register" isPrimary={true} />
         <AnchorButton
           cta="See the community"
           href="/community"
           isPrimary={false}
         />
+      </div>
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+        <Tick para="Easy to use" />
+        <Tick para="Telegram community" />
+        <Tick para="50+ members" />
       </div>
     </section>
   );
