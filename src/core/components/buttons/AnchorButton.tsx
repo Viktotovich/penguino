@@ -6,6 +6,7 @@ type ButtonProps = {
   isPrimary: boolean;
 };
 
+//TODO: Button hover x active states
 export default function AnchorButton({ href, cta, isPrimary }: ButtonProps) {
   return (
     <Link
