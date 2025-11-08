@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { nextCookies } from "better-auth/next-js";
 import prisma from "../prisma/prisma";
 import "dotenv/config";
 
@@ -30,8 +31,9 @@ export const auth = betterAuth({
     google: {
       prompt: "select_account consent",
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLEINT_SECRET as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       accessType: "offline",
     },
   },
+  plugins: [nextCookies()],
 });

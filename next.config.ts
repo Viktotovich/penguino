@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
-    optimizePackageImports: ["@chakra-ui/react", "@lucide/react"],
+    optimizePackageImports: ["@radix-ui/*", "lucide/react", "react-icons"],
   },
 };
 

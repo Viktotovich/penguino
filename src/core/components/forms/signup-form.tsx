@@ -13,31 +13,59 @@ import {
 import { Input } from "~/core/components/ui/input";
 import Image from "next/image";
 
+// Popup + its caller
+import { Toaster } from "../ui/sonner";
+import { toast } from "sonner";
+
+//Types
+import { SignupState } from "~/lib/auth/signup";
+
 // Form Hooks
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+
+// Signup controls
+import { signupDefault } from "~/lib/auth/signup";
+
+//Auth
+import { signInProvider } from "~/lib/auth/auth-client";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const initialState: SignupState = { message: null, errors: {} };
+  const [state, formAction] = useActionState(signupDefault, initialState);
+
+  useEffect(() => {
+    if (state?.message) {
+      toast.message(state.message);
+    }
+  }, [state]);
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form
+            className="p-6 md:p-8"
+            action={formAction}
+            aria-describedby="form-error"
+          >
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Create your account</h1>
                 <p className="text-muted-foreground text-sm text-balance">
-                  Enter your name and email below to create your account
+                  Enter your name and email below to create your account. All
+                  fields are required
                 </p>
               </div>
               <Field>
                 <FieldLabel htmlFor="name">Name</FieldLabel>
                 <Input
                   id="name"
+                  name="name"
                   type="name"
-                  placeholder="Viktor Gonzales"
+                  placeholder="Viktor Viktorovich"
                   required
                 />
               </Field>
@@ -45,6 +73,7 @@ export function SignupForm({
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   required
@@ -54,13 +83,25 @@ export function SignupForm({
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      type="password"
+                      name="password"
+                      minLength={8}
+                      required
+                    />
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
                       Confirm Password
                     </FieldLabel>
-                    <Input id="confirm-password" type="password" required />
+                    <Input
+                      id="confirm-password"
+                      type="password"
+                      name="confirm-password"
+                      minLength={8}
+                      required
+                    />
                   </Field>
                 </Field>
                 <FieldDescription>
@@ -74,7 +115,13 @@ export function SignupForm({
                 Or continue with
               </FieldSeparator>
               <Field className="grid grid-cols-2 gap-4">
-                <Button variant="outline" type="button">
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={() => {
+                    signInProvider("google");
+                  }}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g fill="none" fillRule="evenodd">
                       <path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
@@ -86,7 +133,13 @@ export function SignupForm({
                   </svg>
                   <span className="sr-only">Sign up with Google</span>
                 </Button>
-                <Button variant="outline" type="button">
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={() => {
+                    signInProvider("reddit");
+                  }}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <mask id="SVGVbuWT6fy">
                       <g fill="#fff">
@@ -240,6 +293,7 @@ export function SignupForm({
         By clicking continue, you agree to our{" "}
         <a href="/privacy">Privacy Policy & Terms of Service</a>.
       </FieldDescription>
+      <Toaster />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 "use client";
+
 import { createAuthClient } from "better-auth/client";
+
 const authClient = createAuthClient();
 
 //Run everything through zod before passing it to any of the auth utils
@@ -20,25 +22,26 @@ export async function signInDefault(
     email,
     password,
     rememberMe,
+    callbackURL: "/dashboard",
   });
 
-  return [data, error];
+  return { data, error };
 }
 
 export async function signUpEmail(
   name: string,
   email: string,
   password: string,
-  image: string,
 ) {
   const { data, error } = await authClient.signUp.email({
     name,
     email,
     password,
-    image,
+    image: undefined,
+    callbackURL: "/dashboard",
   });
 
-  return [data, error];
+  return { data, error };
 }
 
 export async function signOut() {
