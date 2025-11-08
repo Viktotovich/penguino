@@ -6,8 +6,8 @@ export default async function Home() {
   return (
     <main>
       <HomepageHero />
-      <div className="flex items-center justify-center bg-slate-900/60 py-24">
-        <p className="text-center">Video here</p>
+      <div className="bg-primary-500 flex items-center justify-center py-24">
+        <p className="text-center text-white">Video here</p>
       </div>
       <BlogPreview />
     </main>

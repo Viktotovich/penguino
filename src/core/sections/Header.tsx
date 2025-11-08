@@ -15,20 +15,16 @@ export default function Header() {
   ];
 
   return (
-    <header className="absolute w-full bg-slate-900/60">
+    <header className="bg-primary-500 absolute w-full">
       <div className="flex items-center justify-between px-6 py-6 md:px-12 xl:px-24">
         <Link href="/">
-          <div className="text-xl font-bold">Logo</div>
+          <div className="text-xl font-bold text-white">Logo</div>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden space-x-8 md:flex">
           {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-foreground hover:text-primary"
-            >
+            <Link key={link.href} href={link.href} className="text-white">
               {link.label}
             </Link>
           ))}
@@ -36,7 +32,7 @@ export default function Header() {
 
         {/* Hamburger */}
         <button
-          className="hover:bg-muted/20 rounded md:hidden"
+          className="rounded hover:cursor-pointer hover:bg-white md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -50,7 +46,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-foreground hover:text-primary block w-full py-2"
+              className="block w-full py-2 text-white"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}

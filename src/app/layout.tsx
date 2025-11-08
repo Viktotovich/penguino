@@ -25,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${cactus.className} dark:bg-gradient-blue relative antialiased`}
-      >
+      <body className={`${cactus.className} relative antialiased`}>
         <Header />
         {children}
       </body>

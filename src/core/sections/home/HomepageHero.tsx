@@ -9,7 +9,7 @@ export default function HomepageHero() {
   return (
     <section className="flex flex-col items-center px-6 pt-53 pb-32">
       <h1
-        className={`${domine.className} max-w-[25ch] pb-4 text-center text-3xl text-white md:text-4xl`}
+        className={`${domine.className} max-w-[25ch] pb-4 text-center text-3xl text-black md:text-4xl`}
       >
         The last entrepenurial platform you would ever need.{" "}
         <span className="bg-linear-to-r from-purple-500 to-blue-500 bg-[length:100%_3px] bg-bottom bg-no-repeat">

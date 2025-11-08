@@ -41,7 +41,7 @@
 
 :root {
   --radius: 0.625rem;
-  --foreground: oklch(94.912% 0.00011 271.152 / 0.931);
+  --foreground: oklch(42.947% 0.07011 259.326 / 0.915);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
@@ -74,7 +74,8 @@
 }
 
 @theme {
-  --color-primary-500: rgb(53, 13, 106);
+  --color-primary-500: rgb(14, 32, 87);
+  --color-primary-600: rgb(53, 13, 106);
 }
 
 @layer base {
@@ -83,6 +84,27 @@
   }
   body {
     @apply text-foreground;
-    background: linear-gradient(121deg, rgb(53, 13, 106), rgb(14, 32, 87));
+    background: oklch(1 0 346.11);
+  }
+
+  .bg-primary-gradient-skeleton {
+    position: relative;
+    background: linear-gradient(
+      110deg,
+      rgba(53, 13, 106, 0.15) 25%,
+      rgba(255, 255, 255, 0.1) 37%,
+      rgba(53, 13, 106, 0.15) 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 3s ease-in-out infinite forwards;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: -100% 0;
+    }
   }
 }

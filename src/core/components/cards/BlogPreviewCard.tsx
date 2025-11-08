@@ -15,9 +15,18 @@ export default function BlogPreviewCard({
   publishedAt,
 }: BlogPreviewCardProps) {
   return (
-    <div className="rounded-2xl bg-slate-800 px-4 pb-4">
-      <div>
-        <Image src={image ?? ""} alt="Blog Image" width="100" height="300" />
+    <div className="rounded-2xl px-4 py-4">
+      <div className="mb-5">
+        <Image
+          src={
+            image ??
+            "https://res.cloudinary.com/dxryzhwxi/image/upload/v1762602836/new_blog_iwckbf.png"
+          }
+          className="w-full rounded-2xl"
+          alt="Blog Image"
+          width="100"
+          height="300"
+        />
       </div>
       <div className="flex gap-4">
         <div>

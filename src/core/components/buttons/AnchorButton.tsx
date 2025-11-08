@@ -11,7 +11,7 @@ export default function AnchorButton({ href, cta, isPrimary }: ButtonProps) {
   return (
     <Link
       href={href}
-      className={`border-border rounded-3xl border px-7 py-2 text-center text-base ${isPrimary && "text-primary-500 bg-white font-bold"}`}
+      className={`border-border rounded-3xl border px-7 py-2 text-center text-base font-bold ${isPrimary && "bg-primary-500 text-white"}`}
     >
       {cta}
     </Link>
