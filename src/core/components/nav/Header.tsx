@@ -4,6 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
+//Components
+import NavLink from "./NavLink";
+import NavLinkWithCB from "./NavLinkWithCB";
+
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -18,15 +22,17 @@ export default function Header() {
     <header className="bg-primary-500 absolute w-full">
       <div className="flex items-center justify-between px-6 py-6 md:px-12 xl:px-24">
         <Link href="/">
-          <div className="text-xl font-bold text-white">Logo</div>
+          <div className="text-xl font-bold text-white hover:cursor-pointer">
+            Logo
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden space-x-8 md:flex">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="text-white">
+            <NavLink href={link.href} key={link.label}>
               {link.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 
@@ -35,7 +41,11 @@ export default function Header() {
           className="rounded hover:cursor-pointer hover:bg-white md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileOpen ? (
+            <X size={24} className="hover:invert" />
+          ) : (
+            
+          )}
         </button>
       </div>
 
@@ -43,14 +53,15 @@ export default function Header() {
       {mobileOpen && (
         <nav className="h-full space-y-2 px-6 pb-4 md:hidden">
           {links.map((link) => (
-            <Link
+            <NavLinkWithCB
               key={link.href}
               href={link.href}
-              className="block w-full py-2 text-white"
-              onClick={() => setMobileOpen(false)}
+              onClick={() => {
+                setMobileOpen(false);
+              }}
             >
               {link.label}
-            </Link>
+            </NavLinkWithCB>
           ))}
         </nav>
       )}

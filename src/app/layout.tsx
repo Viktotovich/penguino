@@ -7,10 +7,8 @@ import "./globals.css";
 //Fonts
 import { cactus } from "~/core/fonts/fonts";
 
-// UI Wrapper
-
 //Components
-import Header from "~/core/sections/Header";
+import Header from "~/core/components/nav/Header";
 
 export const metadata: Metadata = {
   title: "Penguino, home of entrepreneurs",

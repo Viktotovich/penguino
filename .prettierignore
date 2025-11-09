@@ -1,1 +1,4 @@
 /studio-penguino
+/.next
+/generated
+/node_modules

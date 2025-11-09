@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "a11y": "next lint",
+    "db:migrate": "prisma migrate dev",
     "penguino": "tsx ./bin/penguino-cli.ts",
     "penguino:scaffold:base": "tsx ./bin/penguino-cli.ts scaffold:base",
     "penguino:scaffold:full": "tsx ./bin/penguino-cli.ts scaffold:full",
