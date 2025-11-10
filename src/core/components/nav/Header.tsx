@@ -44,7 +44,7 @@ export default function Header() {
           {mobileOpen ? (
             <X size={24} className="hover:invert" />
           ) : (
-            
+            <Menu size={24} className="hover:invert" />
           )}
         </button>
       </div>
