@@ -19,7 +19,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-primary-500 absolute w-full">
+    <header className="bg-primary-500 absolute z-1 w-full">
       <div className="flex items-center justify-between px-6 py-6 md:px-12 xl:px-24">
         <Link href="/">
           <div className="text-xl font-bold text-white hover:cursor-pointer">
