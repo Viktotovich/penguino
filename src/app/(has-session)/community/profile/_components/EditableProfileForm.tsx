@@ -45,13 +45,26 @@ export default function EditableProfileForm({
   const updateNameWithId = updateName.bind(null, user!.id);
 
   const [canEdit, setCanEdit] = useState(false);
+  const [username, setUsername] = useState(() => user?.name ?? "");
   const [state, formAction] = useActionState(updateNameWithId, defaultState);
 
   useEffect(() => {
     if (state?.message) {
+      //clear old loading toast
+      toast.dismiss();
       toast.message(state.message);
     }
   }, [state]);
+
+  function showLoading() {
+    toast.loading("Saving Changes...");
+
+    //To prevent submission blocking, if it were lucid >> I'd wrap in a trx to
+    //prevent duplicate submissions
+    setTimeout(() => {
+      setCanEdit(false);
+    }, 1000);
+  }
 
   function formatJoinDate(createdAt: Date) {
     return createdAt.toString().split("GMT")[0];
@@ -63,15 +76,13 @@ export default function EditableProfileForm({
         <Field>
           <FieldLabel htmlFor="name">Name:</FieldLabel>
           <div className="flex gap-2">
-            {/*Not having the key led to a funny bug where the name was 
-            updated on db, but not on client */}
             <Input
               disabled={!canEdit}
               id="name"
               name="name"
+              onChange={(e) => setUsername(e.target.value)}
               placeholder={"Your Name"}
-              defaultValue={user ? user.name : ""}
-              key={state.message ? state.message : user?.name}
+              value={username}
             />
             <Button
               aria-label={canEdit ? "Disable Editing" : "Enable Editing"}
@@ -87,8 +98,9 @@ export default function EditableProfileForm({
               aria-label="Save Edits"
               disabled={!canEdit}
               className={`${canEdit ? "bg-green-500" : ""} hover:cursor-pointer`}
+              type="submit"
               onClick={() => {
-                //
+                showLoading();
               }}
             >
               <Check />

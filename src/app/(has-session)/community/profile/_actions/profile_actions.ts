@@ -2,6 +2,8 @@
 import prisma from "~/lib/prisma/prisma";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { auth } from "~/lib/auth/auth";
+import { headers } from "next/headers";
 
 const NameSchema = z.object({
   name: z.string().min(4),
@@ -40,7 +42,18 @@ export async function updateName(
       },
     });
 
-    return { errors: null, message: "Name updated successfully!" };
+    //update user name on the stale session
+    await auth.api.updateUser({
+      headers: await headers(),
+      body: {
+        name: validatedFields.data.name,
+      },
+    });
+
+    return {
+      errors: null,
+      message: "Name updated successfully to " + validatedFields.data.name,
+    };
   } catch (err) {
     return {
       errors: null,
