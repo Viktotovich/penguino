@@ -4,9 +4,6 @@ import type { Metadata } from "next";
 //styling
 import "../globals.css";
 
-//Fonts
-import { cactus } from "~/core/fonts/fonts";
-
 //Components
 import { SidebarProvider, SidebarTrigger } from "~/core/components/ui/sidebar";
 import SidebarScaffold from "../../core/components/nav/SidebarScaffold";

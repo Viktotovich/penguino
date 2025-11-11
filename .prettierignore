@@ -2,3 +2,9 @@
 /.next
 /generated
 /node_modules
+.next
+node_modules
+prisma
+public
+dist
+build
