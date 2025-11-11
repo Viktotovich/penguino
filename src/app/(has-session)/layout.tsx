@@ -23,16 +23,12 @@ export default function UserOnlyLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${cactus.className} relative flex antialiased`}>
-        <SidebarProvider>
-          <SidebarScaffold />
-          <main>
-            <SidebarTrigger />
-            {children}
-          </main>
-        </SidebarProvider>
-      </body>
-    </html>
+    <SidebarProvider>
+      <SidebarScaffold />
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
   );
 }
