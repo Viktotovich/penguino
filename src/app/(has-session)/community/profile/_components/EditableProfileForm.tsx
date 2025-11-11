@@ -1,7 +1,7 @@
 "use client";
 
 //Hooks
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 
 //Icons
 import { Pencil, Check } from "lucide-react";
@@ -48,13 +48,11 @@ export default function EditableProfileForm({
   const [username, setUsername] = useState(() => user?.name ?? "");
   const [state, formAction] = useActionState(updateNameWithId, defaultState);
 
-  useEffect(() => {
-    if (state?.message) {
-      //clear old loading toast
-      toast.dismiss();
-      toast.message(state.message);
-    }
-  }, [state]);
+  if (state?.message) {
+    //clear old loading toast
+    toast.dismiss();
+    toast.message(state.message);
+  }
 
   function showLoading() {
     toast.loading("Saving Changes...");
