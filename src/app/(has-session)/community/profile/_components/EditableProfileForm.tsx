@@ -45,6 +45,7 @@ export default function EditableProfileForm({
   const updateNameWithId = updateName.bind(null, user!.id);
 
   const [canEdit, setCanEdit] = useState(false);
+  //Can also be refactored, but would be extra work for nothing
   const [username, setUsername] = useState(() => user?.name ?? "");
   const [state, formAction] = useActionState(updateNameWithId, defaultState);
 
@@ -57,8 +58,13 @@ export default function EditableProfileForm({
   function showLoading() {
     toast.loading("Saving Changes...");
 
-    //To prevent submission blocking, if it were lucid >> I'd wrap in a trx to
-    //prevent duplicate submissions
+    /*To prevent submission blocking, if it were lucid >> I'd wrap in a trx to
+    prevent duplicate submissions << TODO: Also block duplicate submissions 
+    (ACID) -- Before/On Prod
+    
+    https://www.prisma.io/docs/orm/prisma-client/queries/transactions
+    /community/profile/_actions/profile_actions.ts
+    */
     setTimeout(() => {
       setCanEdit(false);
     }, 1000);
@@ -126,6 +132,7 @@ export default function EditableProfileForm({
             />
           </div>
         </Field>
+        <p>TODO: Also an Avatar</p>
       </FieldGroup>
       <Toaster />
     </form>

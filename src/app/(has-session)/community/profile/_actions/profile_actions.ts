@@ -9,6 +9,28 @@ const NameSchema = z.object({
   name: z.string().min(4),
 });
 
+const MAX_FILE_SIZE = 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
+const AvatarSchema = z.object({
+  image: z
+    .file()
+    .refine((file) => file.size <= MAX_FILE_SIZE, "Max image size is 1MB")
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+      "Only jpeg, jpg, png and webp are supported",
+    ),
+  /*
+  TODO: Malware Parser
+  https://github.com/pompelmi/pompelmi
+  */
+});
+
 export type NameChangeState = {
   errors?: {
     name?: string[];
