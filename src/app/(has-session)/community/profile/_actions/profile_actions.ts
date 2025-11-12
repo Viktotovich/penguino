@@ -43,6 +43,7 @@ export async function updateName(
   prevState: NameChangeState,
   formData: FormData,
 ) {
+  //URGENT TODO: Refactor to not use clientside UserId << overlooked vulnerability
   const validatedFields = NameSchema.safeParse({
     name: formData.get("name"),
   });

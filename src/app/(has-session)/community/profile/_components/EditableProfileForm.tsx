@@ -10,6 +10,8 @@ import { Pencil, Check } from "lucide-react";
 import { Field, FieldGroup, FieldLabel } from "~/core/components/ui/field";
 import { Input } from "~/core/components/ui/input";
 import { Button } from "~/core/components/ui/button";
+import { ImageUploadDropzone } from "~/core/components/upload/upload";
+import { AvatarImage, Avatar } from "~/core/components/ui/avatar";
 
 //Actions
 import { updateName } from "../_actions/profile_actions";
@@ -20,6 +22,7 @@ import { NameChangeState } from "../_actions/profile_actions";
 // Popup + its caller
 import { toast } from "sonner";
 import { Toaster } from "~/core/components/ui/sonner";
+
 
 type EditableProfileFormTypes = {
   user:
@@ -132,7 +135,16 @@ export default function EditableProfileForm({
             />
           </div>
         </Field>
-        <p>TODO: Also an Avatar</p>
+        <FieldLabel htmlFor="name">Avatar:</FieldLabel>
+        <Avatar>
+          <AvatarImage src={user.} />
+        </Avatar>
+        <ImageUploadDropzone
+          endpoint="imageUploader"
+          onClientUploadComplete={(res) => {
+            toast.success("Succesfully changed Avatar");
+          }}
+        />
       </FieldGroup>
       <Toaster />
     </form>

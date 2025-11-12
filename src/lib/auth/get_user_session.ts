@@ -4,9 +4,12 @@ import { headers } from "next/headers";
 export default async function getUserSession() {
   "use server";
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  return session;
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    return session;
+  } catch {
+    return null;
+  }
 }
