@@ -13,7 +13,10 @@ import EditableProfileForm from "./EditableProfileForm";
 
 export default async function PrivateProfile() {
   //Wrapping it in a Promise<> in expectation of a 2nd fetch (posts/comments)
-  const [userSession] = await Promise.all([getUserSession()]);
+  type AwaitedSessionType = Awaited<ReturnType<typeof getUserSession>>;
+  const [userSession] = await Promise.all<AwaitedSessionType>([
+    getUserSession(),
+  ]);
 
   return (
     <section>

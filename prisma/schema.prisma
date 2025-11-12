@@ -70,3 +70,5 @@ model Verification {
 
   @@map("verification")
 }
+
+/// TODO: Comments + Posts + Resources >> Blogs handled by sanity
