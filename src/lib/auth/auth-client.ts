@@ -2,7 +2,7 @@
 
 import { createAuthClient } from "better-auth/client";
 
-const authClient = createAuthClient();
+export const authClient = createAuthClient();
 
 //Run everything through zod before passing it to any of the auth utils
 export async function signInProvider(provider: "reddit" | "google") {
