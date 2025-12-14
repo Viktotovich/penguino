@@ -59,7 +59,7 @@ export default function PaginationControl({
               <Button
                 onClick={() => handleSearch(currPage - 1)}
                 disabled={currPage <= 1}
-                className="hover:cursor-pointer"
+                className="bg-transparent text-black transition-all duration-300 hover:cursor-pointer hover:bg-slate-500 hover:text-white"
                 aria-label="Go to previous page"
               >
                 <ChevronLeftIcon />
@@ -73,7 +73,7 @@ export default function PaginationControl({
               <Button
                 onClick={() => handleSearch(currPage + 1)}
                 disabled={currPage >= totalPages}
-                className="hover:cursor-pointer"
+                className="bg-transparent text-black transition-all duration-300 hover:cursor-pointer hover:bg-slate-500 hover:text-white"
                 aria-label="Go to next page"
               >
                 Go forward
