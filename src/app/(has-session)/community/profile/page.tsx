@@ -4,7 +4,16 @@ import PrivateProfile from "./_components/PrivateProfile";
 //Suspense wrapper / loading
 import { Suspense } from "react";
 
-const examplePosts = [{}];
+//Types
+import type { post } from "~/generated/prisma/client";
+
+const examplePost: post = [
+  {
+    id: 1,
+    hidden: false,
+    title: "Test Post to see if everything is a-okay",
+  },
+];
 
 export const dynamic = "force-dynamic";
 
