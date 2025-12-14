@@ -25,10 +25,6 @@ const AvatarSchema = z.object({
       (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
       "Only jpeg, jpg, png and webp are supported",
     ),
-  /*
-  TODO: Malware Parser
-  https://github.com/pompelmi/pompelmi
-  */
 });
 
 export type NameChangeState = {
