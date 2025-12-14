@@ -4,6 +4,8 @@ import PrivateProfile from "./_components/PrivateProfile";
 //Suspense wrapper / loading
 import { Suspense } from "react";
 
+const examplePosts = [{}];
+
 export const dynamic = "force-dynamic";
 
 export default function PrivateProfilePage() {
