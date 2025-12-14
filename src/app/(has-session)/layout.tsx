@@ -22,7 +22,7 @@ export default function UserOnlyLayout({
   return (
     <SidebarProvider>
       <SidebarScaffold />
-      <main>
+      <main className="w-full">
         <SidebarTrigger />
         {children}
       </main>

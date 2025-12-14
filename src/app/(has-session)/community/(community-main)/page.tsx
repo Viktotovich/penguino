@@ -1,18 +1,38 @@
 //Components
 import PaginationControl from "~/core/components/dynamic/PaginationControl";
 
+//Utils
+import normalizePage from "~/lib/pagination/normalizePage";
+
+//Actions
+import {
+  fetchLatestPosts,
+  fetchPagesCount,
+} from "./_actions/community_posts_actions";
+
 export default async function PrivateProfilePage({
   searchParams,
 }: {
   searchParams?: Promise<{ page?: string }>;
 }) {
+  //Pagination logic
   const query = await searchParams;
-  const currPage = query?.page ? query.page : 1;
+  const totalPages = await fetchPagesCount();
+  const currPage = normalizePage(query?.page ?? null, totalPages);
+
+  //Action execution
+  const posts = await fetchLatestPosts(currPage);
 
   return (
-    <div>
-      <p>{currPage}</p>
-      <PaginationControl totalPages={10} />
-    </div>
+    <main className="px-6 pt-53 pb-32">
+      <div className="flex flex-col items-center">
+        {totalPages === 0 && (
+          <p>
+            Huh, no posts? <span className="italic">You can be the first!</span>
+          </p>
+        )}
+        <PaginationControl totalPages={totalPages} />
+      </div>
+    </main>
   );
 }

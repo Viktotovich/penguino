@@ -2,6 +2,7 @@
 
 //Utils
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import normalizePage from "~/lib/pagination/normalizePage";
 
 //Components
 import { Button } from "../ui/button";
@@ -31,13 +32,9 @@ export default function PaginationControl({
   function parseSearch() {
     //Could be a string, or a number to mess with the db
     const unsafeCurrPage = searchParams.get("page");
-    const parsedPage = Number(unsafeCurrPage);
 
     //Removes number-jacking && string insertion
-    const currPage =
-      !parsedPage || Number.isNaN(parsedPage)
-        ? 1
-        : Math.min(Math.max(parsedPage, 1), totalPages);
+    const currPage = normalizePage(unsafeCurrPage, totalPages);
 
     return currPage;
   }
@@ -50,11 +47,11 @@ export default function PaginationControl({
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <output className="mb-2">Current page: {currPage}</output>
+    <section className="flex flex-col items-center">
       <div>
         <Pagination>
           <PaginationContent>
+            {/*Refactor later to 1 2 3 ... 66 67 */}
             <PaginationItem>
               <Button
                 onClick={() => handleSearch(currPage - 1)}
@@ -82,7 +79,12 @@ export default function PaginationControl({
             </PaginationItem>
           </PaginationContent>
         </Pagination>
+        <div className="flex justify-center">
+          <output className="text-foreground/70 text-xs">
+            Current page: {currPage}
+          </output>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
