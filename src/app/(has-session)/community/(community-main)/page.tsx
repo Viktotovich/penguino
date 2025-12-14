@@ -1,14 +1,16 @@
+"use server";
 //Components
 import PaginationControl from "~/core/components/dynamic/PaginationControl";
+import PostList from "~/core/components/dynamic/PostList";
 
 //Utils
 import normalizePage from "~/lib/pagination/normalizePage";
 
+//Skeleton
+import { Suspense } from "react";
+
 //Actions
-import {
-  fetchLatestPosts,
-  fetchPagesCount,
-} from "./_actions/community_posts_actions";
+import { fetchPagesCount } from "./_actions/community_posts_actions";
 
 export default async function PrivateProfilePage({
   searchParams,
@@ -20,9 +22,6 @@ export default async function PrivateProfilePage({
   const totalPages = await fetchPagesCount();
   const currPage = normalizePage(query?.page ?? null, totalPages);
 
-  //Action execution
-  const posts = await fetchLatestPosts(currPage);
-
   return (
     <main className="px-6 pt-53 pb-32">
       <div className="flex flex-col items-center">
@@ -31,6 +30,10 @@ export default async function PrivateProfilePage({
             Huh, no posts? <span className="italic">You can be the first!</span>
           </p>
         )}
+        <Suspense fallback={<p>TODO: Skeleton</p>}>
+          <PostList currPage={currPage} />
+        </Suspense>
+        <PaginationControl totalPages={totalPages} />
       </div>
     </main>
   );

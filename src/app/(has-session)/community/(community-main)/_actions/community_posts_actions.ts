@@ -54,7 +54,7 @@ const mockPosts: post[] = [
   },
 ];
 
-export async function fetchLatestPosts(currPage: number) {
+export async function fetchLatestPosts(currPage: number): Promise<post[]> {
   //https://www.prisma.io/docs/orm/prisma-client/queries/pagination
   const startIndex = currPage * 5; //the "skip"
   const postSelectCount = 5; //the "take"
