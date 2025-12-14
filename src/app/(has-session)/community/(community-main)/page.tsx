@@ -31,7 +31,6 @@ export default async function PrivateProfilePage({
             Huh, no posts? <span className="italic">You can be the first!</span>
           </p>
         )}
-        <PaginationControl totalPages={totalPages} />
       </div>
     </main>
   );

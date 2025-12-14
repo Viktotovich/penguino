@@ -47,7 +47,7 @@ export default function PaginationControl({
   }
 
   return (
-    <section className="flex flex-col items-center">
+    <section className="mt-12 flex flex-col items-center">
       <div>
         <Pagination>
           <PaginationContent>
