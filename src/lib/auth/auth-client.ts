@@ -8,7 +8,7 @@ export const authClient = createAuthClient();
 export async function signInProvider(provider: "reddit" | "google") {
   const data = await authClient.signIn.social({
     provider,
-    callbackURL: "/dashboard",
+    callbackURL: "/community",
   });
 
   return data;

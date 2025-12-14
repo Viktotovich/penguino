@@ -23,7 +23,6 @@ import { NameChangeState } from "../_actions/profile_actions";
 import { toast } from "sonner";
 import { Toaster } from "~/core/components/ui/sonner";
 
-
 type EditableProfileFormTypes = {
   user:
     | {
@@ -137,7 +136,7 @@ export default function EditableProfileForm({
         </Field>
         <FieldLabel htmlFor="name">Avatar:</FieldLabel>
         <Avatar>
-          <AvatarImage src={user.} />
+          <AvatarImage src={user?.image ? user.image : ""} />
         </Avatar>
         <ImageUploadDropzone
           endpoint="imageUploader"
