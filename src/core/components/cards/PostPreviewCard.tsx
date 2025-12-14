@@ -3,6 +3,9 @@
 //types
 import type { post } from "~/generated/prisma/client";
 
+//Utils
+import shortenBody from "~/lib/posts/shortenBody";
+
 //Components
 import {
   Card,
@@ -23,7 +26,7 @@ export default function PostPreviewCard({ userPost }: PostPreviewCardProps) {
       <p>Like button, Readmore, content, etc</p>
       <Card>
         <CardHeader>
-          <CardDescription>{userPost.body}</CardDescription>
+          <CardDescription>{shortenBody(userPost.body)}</CardDescription>
         </CardHeader>
       </Card>
     </div>
