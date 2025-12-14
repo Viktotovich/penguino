@@ -26,7 +26,7 @@ export default function PostPreviewCard({ userPost }: PostPreviewCardProps) {
       <p>Like button, Readmore, content, etc</p>
       <Card>
         <CardHeader>
-          <CardDescription>{shortenBody(userPost.body)}</CardDescription>
+          <CardDescription>{shortenBody(userPost.body, 100)}</CardDescription>
         </CardHeader>
       </Card>
     </div>
