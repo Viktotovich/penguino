@@ -70,7 +70,7 @@ model verification {
 model post {
   id        String        @id
   hidden    Boolean       @default(false)
-  title     String
+  title     String        @db.VarChar(100)
   body      String
   likes     postLike[]
   ///Big ? on categories, probably better uncategorized

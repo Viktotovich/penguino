@@ -5,6 +5,7 @@ import { fetchLatestPosts } from "~/app/(has-session)/community/(community-main)
 
 //Components
 import PostPreviewCard from "../cards/PostPreviewCard";
+import { Separator } from "@radix-ui/react-separator";
 
 type PostListProps = {
   currPage: number;
@@ -15,7 +16,7 @@ export default async function PostList({ currPage }: PostListProps) {
   const posts = await fetchLatestPosts(currPage);
 
   return (
-    <section>
+    <section className="flex flex-col gap-12">
       {posts.map((post) => (
         <PostPreviewCard userPost={post} key={post.id} />
       ))}

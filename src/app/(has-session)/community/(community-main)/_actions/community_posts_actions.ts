@@ -44,7 +44,7 @@ const mockPosts: post[] = [
     updatedAt: new Date(),
   },
   {
-    id: "4",
+    id: "5",
     hidden: false,
     title: "Test Post to see if everything is a-okay",
     body: "A very interesting yet very long paragraph about how awesome Penguino is. It really doesn't end, there should be some kind of a char limit. If you are seeing this without expanding, this is too much content shown. Also, How on earth do we handle new lines? Do we use an arbitrary code like <addnewlinehere> for a <br /> - Actually, will the br by itself work? HTML should be sanitized like in EJS and Edge lol. It will be 100%. I know React does that out of the box",

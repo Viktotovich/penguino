@@ -23,7 +23,7 @@ export default async function PrivateProfilePage({
   const currPage = normalizePage(query?.page ?? null, totalPages);
 
   return (
-    <main className="px-6 pt-53 pb-32">
+    <main className="px-6 pt-15 pb-32">
       <div className="flex flex-col items-center">
         {totalPages === 0 && (
           <p>

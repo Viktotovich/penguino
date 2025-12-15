@@ -8,12 +8,19 @@ import { ComponentProps } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "~/lib/utils";
 
-export default function NavLink(props: ComponentProps<typeof Link>){
-    const pathname = usePathname()
+export default function NavLink(props: ComponentProps<typeof Link>) {
+  const pathname = usePathname();
 
-    return (
-        <>
-            <Link {...props} href={props.href} className={cn("text-white p-2 rounded-sm hover:cursor-pointer transition duration-300 hover:bg-white hover:text-primary-500", pathname === props.href && "bg-white text-primary-500")} />
-        </>
-    )
+  return (
+    <>
+      <Link
+        {...props}
+        href={props.href}
+        className={cn(
+          "hover:text-primary-500 rounded-sm p-2 text-white transition duration-300 hover:cursor-pointer hover:bg-white",
+          pathname === props.href && "text-primary-500 bg-white",
+        )}
+      />
+    </>
+  );
 }
