@@ -27,7 +27,7 @@ export default function PostDropdownMenu({
 }: PostDropdownMenuProps) {
   function getPostUrl() {
     return new URL(
-      `/community/posts/${postId}`,
+      `/community/post/${postId}`,
       window.location.origin,
     ).toString();
   }
