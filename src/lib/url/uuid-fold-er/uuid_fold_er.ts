@@ -1,0 +1,191 @@
+import UUIDError from "./uuid_error";
+
+/*UUIDBase is the parent:
+Let's say we have 50 calls for 1 instance of a UUID, instead
+of saving all to memory blindly, we save the parent (3-4 characters of the 
+UUID) - and work with it's children (slighlty longer versions (5 chars and 
+above)). 
+
+This way, instead of having to look up the entire array length to find if
+there is a  conflict in an O(n) fashion, we traverse the bucket-like parent 
+list instead O(log n). 
+
+Disclaimer: I know Maps are O(n) look ups, but this is made for fun and the current DS/A would be better than plain look ups had it been done with arrays.
+*/
+
+export interface UUIDStore {
+  ensureBase(base: string): Promise<void>;
+  addChild(base: string, child: string): Promise<void>;
+  hasChild(base: string, child: string): Promise<boolean>;
+}
+
+class UUIDFolder {
+  minLength: number;
+  maxLength: number;
+  memory: UUIDStore; // UUID bucket w/ previous iterations
+
+  constructor(minLength: number = 3, maxLength: number = 32, store: UUIDStore) {
+    this.minLength = minLength;
+    this.maxLength = maxLength; // 0 for no maxLength
+    this.memory = store;
+    /*Future consideration: 
+    - Custom UUID base setups
+    - Base should NOT be longer than the minLength of the returned short UUID.
+    As then there will be high risk of conflicts
+    */
+    this.mismatchCheck();
+  }
+
+  changeMinLength(newMin: number) {
+    //Incase of string based numbers. Future consideration are float numbers
+    const safeNewMin = Number(newMin);
+    if (safeNewMin < 3) {
+      throw new UUIDError("Min Length must be atleast 3 chars long.");
+    } else {
+      this.minLength = safeNewMin;
+    }
+  }
+
+  changeMaxLength(newMax: number) {
+    //Incase of string based numbers. Future consideration are float numbers
+    const safeMaxLength = Number(newMax);
+    if (newMax >= 32) {
+      throw new UUIDError("Are you sure? Might as well just use the full UUID");
+    } else {
+      this.maxLength = safeMaxLength;
+    }
+  }
+
+  async process(uuid: string | URL) {
+    /*Check if URL, if URL - get just the ending part of the path
+
+    i.e: https://example.com/foo/bar/baz/<uuid> turns into just <uuid>
+    */
+    const safeUUID = this.normalize(uuid);
+
+    //We're getting the bucket value for the UUID
+    const uuidBase = this.getUUIDBase(safeUUID);
+
+    //Check if exists, if not, create new
+    await this.memory.ensureBase(uuidBase);
+
+    //Recursively get shortned UUID
+    const newUUID = await this.recursivelyGetShortenedUUID(
+      uuidBase,
+      safeUUID,
+      0,
+    );
+
+    //Save child to memory to avoid conflict
+    await this.memory.addChild(uuidBase, newUUID);
+
+    return newUUID;
+  }
+
+  //Take a possible URL, convert it into a pure/safe UUID string
+  normalize(uuid: string | URL) {
+    //If URL form, format as string
+    const stringUUID = uuid.toString();
+
+    //Get the index of the last subpath (if applicable)
+    const head = stringUUID.lastIndexOf("/");
+
+    //Return full or return sliced
+    return head === -1 ? stringUUID : stringUUID.slice(head + 1);
+  }
+
+  /* minL must not be higher than maxL, otherwise, no shortned URL can be
+  produced */
+  private mismatchCheck() {
+    if (this.minLength >= this.maxLength) {
+      throw new UUIDError("Min Length cannot be longer than Max Length");
+    }
+  }
+
+  /*
+   * Extracts the "base"/parent of a UUID for memory bucketing.
+   *
+   * The first three (or more, depending on future setup) characters of the
+   * UUID are used as a key in `this.memory` to group related shortened
+   * variants together. This reduces the search space
+   * when checking for conflicts among already-generated shortened UUIDs.
+   *
+   * uuid - The full "normalized" UUID string to get the base from
+   * */
+  private getUUIDBase(uuid: string) {
+    /* Why 3? 3 is the minimum minLength we can set.
+     *
+     * As long as `minLength` remains greater than `baseLength` (the hardcoded
+     * 3), the logic for shortening and conflict resolution remains safe.
+     * If you so need to adjust the baseLength to be higher, make sure to
+     * raise the minLength accordingly to avoid bugs.
+     * */
+    return uuid.slice(0, 3);
+  }
+
+  /*
+   * Made into it's own function for clarity's sake.
+   * Checks if the generated value already exists in the children of a common
+   * parent base (in other words, is there a conflict?)
+   */
+  private async conflictCheck(base: string, newUUID: string) {
+    return await this.memory.hasChild(base, newUUID);
+  }
+
+  //Recursively gets the shortned URL with the conflictCheck Helper function
+  private async recursivelyGetShortenedUUID(
+    base: string,
+    uuid: string,
+    iterationCount: number,
+  ): Promise<string> {
+    /* Looks weird at first, but remember, we're in recurssion now.
+     * This could be the nth iteration, and charsAllowed makes sure
+     * we are going forward (in characters).
+     * While isExceeding is making sure we don't stack overflow, sets a limit
+     */
+    const charsAllowed = iterationCount + this.minLength;
+    const isExceeding = charsAllowed > this.maxLength;
+
+    //Throw if we're exceeding allowed characters
+    if (isExceeding) {
+      throw new UUIDError(
+        "URL conflicts cannot be resolved: It's reccomended that you either increase the max length of the UUID or rotate the UUID key for this specific URL - as a limit has been reached on the maxLength, with no suitable safe UUID URL's available.",
+      );
+    }
+
+    /*Unsafe until tested for conflict:
+     * This is what "makes" the shortned URL*/
+    const unsafeShortnedUUID = uuid.slice(0, charsAllowed);
+
+    const hasConflict = await this.conflictCheck(base, unsafeShortnedUUID);
+
+    //If no conflict, the UUID is safe for use
+    if (!hasConflict) return unsafeShortnedUUID;
+
+    //If conflict, iterate & increase by 1 character limit
+    return await this.recursivelyGetShortenedUUID(
+      base,
+      uuid,
+      iterationCount + 1,
+    );
+  }
+}
+
+//To be used as a signleton
+export default UUIDFolder;
+
+/*
+Usage with db:
+  export class YourDBStore implements UUIDStore {
+    store: <yourdbtype>
+    constructor(store){
+      this.store = store << your db
+    }
+    async esureBase(){}
+    async addChild(){}
+    async hasChild(){}
+  } 
+
+  Testing to be handled on your end, as it is currently tested only for
+  per-session basis (which doesn't have a layer of persistance to it).
+  */
