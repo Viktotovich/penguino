@@ -1,3 +1,5 @@
+"use client";
+
 //Components
 import {
   DropdownMenu,
@@ -11,10 +13,10 @@ import Link from "next/link";
 
 //Dynamic components
 import ReportForm from "../forms/ReportForm";
+import CopyToClipboardButton from "../buttons/CopyToClipboardButton";
 
 //Icons
 import { MoreHorizontalIcon } from "lucide-react";
-import { Button } from "../ui/button";
 
 type PostDropdownMenuProps = {
   authorId: string;
@@ -47,13 +49,7 @@ export default function PostDropdownMenu({
             <ReportForm />
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(getPostUrl());
-              }}
-            >
-              Copy Post URL
-            </button>
+            <CopyToClipboardButton link={getPostUrl()} body="Copy Post URL" />
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
