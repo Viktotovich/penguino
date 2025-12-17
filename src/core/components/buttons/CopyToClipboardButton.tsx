@@ -1,23 +1,22 @@
+"use client";
 //types
 import { ButtonHTMLAttributes } from "react";
 
 type CopyToClipboardButtonProps = {
-  link: string;
+  cb: () => void;
   body: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function CopyToClipboardButton({
-  link,
+  cb,
   body,
   ...attr
 }: CopyToClipboardButtonProps) {
-  function copyToClipboard() {
-    return navigator.clipboard.writeText(link);
-  }
-
   return (
-    <button onClick={copyToClipboard} {...attr}>
-      {body}
-    </button>
+    <>
+      <button onClick={cb} {...attr}>
+        {body}
+      </button>
+    </>
   );
 }
