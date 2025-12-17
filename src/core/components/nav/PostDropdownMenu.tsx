@@ -1,7 +1,6 @@
 "use client";
 
 //Components
-import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +8,8 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "@radix-ui/react-dropdown-menu";
+import Link from "next/link";
 
 //Dynamic components
 import ReportForm from "../forms/ReportForm";
