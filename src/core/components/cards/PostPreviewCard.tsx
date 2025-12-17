@@ -18,6 +18,7 @@ import {
 } from "../ui/card";
 import ReadMoreAnchor from "../buttons/ReadMoreAnchor";
 import PostDropdownMenu from "../nav/PostDropdownMenu";
+import PostActions from "../dynamic/PostActions";
 
 type PostPreviewCardProps = {
   userPost: post;
@@ -47,7 +48,12 @@ export default function PostPreviewCard({ userPost }: PostPreviewCardProps) {
           </CardDescription>
         </CardContent>
         <CardFooter>
-          <p>Likes and all</p>
+          <PostActions
+            likes={12}
+            isLiked={false}
+            commentQuantity={3}
+            postId={userPost.id}
+          />
         </CardFooter>
       </Card>
     </div>

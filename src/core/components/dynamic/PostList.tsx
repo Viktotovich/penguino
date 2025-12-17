@@ -5,7 +5,6 @@ import { fetchLatestPosts } from "~/app/(has-session)/community/(community-main)
 
 //Components
 import PostPreviewCard from "../cards/PostPreviewCard";
-import { Separator } from "@radix-ui/react-separator";
 
 type PostListProps = {
   currPage: number;
