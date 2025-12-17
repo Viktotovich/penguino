@@ -1,7 +1,7 @@
 export default function ReportForm() {
   //TODO: me
   return (
-    <form>
+    <form className="hover:cursor-pointer">
       <p>Report Form</p>
     </form>
   );
