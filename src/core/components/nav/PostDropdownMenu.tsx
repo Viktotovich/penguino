@@ -1,6 +1,10 @@
 "use client";
 
+//utils
+import { toast } from "sonner";
+
 //Components
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,12 +12,10 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
-import Link from "next/link";
+} from "../ui/dropdown-menu";
 
 //Dynamic components
 import ReportForm from "../forms/ReportForm";
-import CopyToClipboardButton from "../buttons/CopyToClipboardButton";
 
 //Icons
 import { MoreHorizontalIcon } from "lucide-react";
@@ -27,11 +29,14 @@ export default function PostDropdownMenu({
   authorId,
   postId,
 }: PostDropdownMenuProps) {
-  function getPostUrl() {
-    return new URL(
+  function copyToClipboard() {
+    const url = new URL(
       `/community/post/${postId}`,
       window.location.origin,
     ).toString();
+
+    navigator.clipboard.writeText(url);
+    toast.success("Copied");
   }
 
   return (
@@ -42,14 +47,22 @@ export default function PostDropdownMenu({
       <DropdownMenuContent>
         <DropdownMenuLabel>Penguino Social Post</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Link href={`/community/profiles/${authorId}`}>View Author</Link>
+          <DropdownMenuItem asChild>
+            <Link
+              href={`/community/profiles/${authorId}`}
+              className="hover:cursor-pointer"
+            >
+              View Author
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <ReportForm />
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CopyToClipboardButton link={getPostUrl()} body="Copy Post URL" />
+          <DropdownMenuItem
+            onSelect={copyToClipboard}
+            className="w-full text-left hover:cursor-pointer"
+          >
+            Copy post URL
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

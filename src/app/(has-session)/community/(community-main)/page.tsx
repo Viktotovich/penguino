@@ -2,6 +2,7 @@
 //Components
 import PaginationControl from "~/core/components/dynamic/PaginationControl";
 import PostList from "~/core/components/dynamic/PostList";
+import { Toaster } from "~/core/components/ui/sonner";
 
 //Utils
 import normalizePage from "~/lib/pagination/normalizePage";
@@ -35,6 +36,7 @@ export default async function PrivateProfilePage({
         </Suspense>
         <PaginationControl totalPages={totalPages} />
       </div>
+      <Toaster />
     </main>
   );
 }
